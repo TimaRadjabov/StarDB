@@ -1,0 +1,17 @@
+.header {
+  padding: 30px 0;
+  a {
+    text-decoration: none;
+  }
+}
+
+.header__list {
+  li {
+    list-style: none;
+    font-size: 22px;
+    line-height: 120%;
+  }
+  & > *:not(:last-child) {
+    margin-right: 15px;
+  }
+}
