@@ -1,8 +1,8 @@
 import { Component } from "react";
+import { ThreeCircles } from "react-loader-spinner";
 
 import StarApi from "../../service";
-
-import { ThreeCircles } from "react-loader-spinner";
+import Error from "../Error";
 
 import "./randomPlanet.scss";
 
@@ -10,10 +10,15 @@ class RandomPlanet extends Component {
   state = {
     planet: {},
     loading: false,
+    error: false,
   };
 
   componentDidMount() {
     this.upDate();
+    this.interval = setInterval(this.upDate, 5000);
+  }
+  componentWillUnmount(){
+    clearInterval(this.interval)
   }
 
   onPlanetLoaded = (planet) => {
@@ -24,16 +29,22 @@ class RandomPlanet extends Component {
       loading: true,
     });
   };
+  onPlanetError = () => {
+    this.setState({
+      loading: false,
+      error: true,
+    });
+  };
   upDate = () => {
     this.onPlanetLoading();
     const starAPI = new StarApi();
     const id = Math.floor(Math.random() * 15 + 1);
-    starAPI.getPlanet(id).then(this.onPlanetLoaded);
+    starAPI.getPlanet(id).then(this.onPlanetLoaded).catch(this.onPlanetError);
   };
-
   render() {
-    const { planet, loading } = this.state;
-    const content = !loading ? <View planet={planet} /> : null;
+    const { planet, loading, error } = this.state;
+    const content = !(loading || error) ? <View planet={planet} /> : null;
+    const errorMessage = error ? <Error /> : null;
     const spinner = loading ? (
       <ThreeCircles
         height="100"
@@ -52,6 +63,7 @@ class RandomPlanet extends Component {
       <div className="planet__wrapper d-flex align-items-center justify-content-center">
         {content}
         {spinner}
+        {errorMessage}
       </div>
     );
   }
