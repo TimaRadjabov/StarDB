@@ -1,17 +1,16 @@
-import { Component } from "react";
+import React, { Component } from "react";
 
-import StarApi from "../../service";
 import { ThreeCircles } from "react-loader-spinner";
 
-import "./personDetails.scss";
+import "./itemDetails.scss";
 
-class PersonDetails extends Component {
+class ItemDetails extends Component {
   state = {
     person: null,
     loading: false,
+   
   };
 
-  starAPi = new StarApi();
 
   componentDidMount() {
     this.onPersonUpdate();
@@ -27,7 +26,7 @@ class PersonDetails extends Component {
     if (!this.props.charId) {
       return;
     }
-    this.starAPi.getPerson(this.props.charId).then((person) => {
+    this.props.getData.then((person) => {
       this.setState({ person, loading: false });
     });
   };
@@ -37,10 +36,11 @@ class PersonDetails extends Component {
     });
   };
   render() {
-    const { person, loading } = this.state;
+    const { person, loading} = this.state;
     if (!person) {
       return <div className="choose">Choose a character and you will see details</div>;
     }
+    const itemImg = this.props.getItemImg;
     const spinner = loading ? (
      <div className="details__spinner">
        <ThreeCircles
@@ -57,7 +57,7 @@ class PersonDetails extends Component {
       />
      </div>
     ) : null;
-    const content = !loading ? <View person={person} /> : null;
+    const content = !loading ?  <View person={person} img={itemImg} children={this.props.children}/>  : null;
 
     return (
       <div className="details">
@@ -67,24 +67,30 @@ class PersonDetails extends Component {
     );
   }
 }
-
-const View = ({ person: { id, name, gender, birthYear, eyeColor } }) => {
+export const Record = ({label, field, person}) => {
+  return(
+    <li className="list-group-item">{label}: {person[field]}</li>
+  )
+}
+const View = ({ person, img, children }) => {
   return (
     <>
       <img
-        src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
-        alt=""
-        className="details__img"
+        src={img}
+        alt="img"
+        className="details__img"  
       />
       <div className="details__content">
-        <div className="details-title">{name}</div>
+        <div className="details-title">{person.name}</div>
         <ul className="details__list list-group">
-          <li className="list-group-item">Gender: {gender}</li>
-          <li className="list-group-item">Birth year: {birthYear}</li>
-          <li className="list-group-item">Eye color: {eyeColor}</li>
+        {React.Children.map(children, (child) => {
+          return React.cloneElement(child, {person})
+        })}
+         
         </ul>
       </div>
+      
     </>
   );
 };
-export default PersonDetails;
+export default ItemDetails;

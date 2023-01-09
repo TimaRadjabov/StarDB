@@ -1,5 +1,6 @@
 export default class StarApi {
   _apiBase = "https://swapi.dev/api";
+  _imageBase = "https://starwars-visualguide.com/assets/img";
 
   getResource = async (url) => {
     const res = await fetch(url);
@@ -10,7 +11,7 @@ export default class StarApi {
   };
   getAllPeople = async () => {
     const res = await this.getResource(`${this._apiBase}/people/`);
-    return res.results.map(this._transformPlanet);
+    return res.results.map(this._transformPerson);
   };
   getPerson = async (id) => {
     const person = await this.getResource(`${this._apiBase}/people/${id}`);
@@ -32,6 +33,18 @@ export default class StarApi {
     const ship = await this.getResource(`${this._apiBase}/starships/${id}`);
     return this._transformPlanet(ship);
   };
+  getImgPerson = (id) => {
+    return `${this._imageBase}/characters/${id}.jpg`
+  }
+  getImgPlanet = (id) => {
+    return `${this._imageBase}/planets/${id}.jpg`
+  }
+  getImgStarship = (id) => {
+    return `${this._imageBase}/starships/${id}.jpg`
+  }
+
+
+
   _extractId(item) {
     const idRegExp = /\/([0-9]*)\/$/;
     return item.url.match(idRegExp)[1];

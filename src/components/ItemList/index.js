@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { ThreeCircles } from "react-loader-spinner";
-import StarApi from "../../service";
+
 
 import "./itemList.scss";
 
@@ -11,10 +11,10 @@ class ItemList extends Component {
     error: false,
   };
 
-  starApi = new StarApi();
+
 
   componentDidMount() {
-    this.starApi.getAllPeople().then((persons) => this.setState({ persons }));
+    this.props.getData().then((persons) => this.setState({ persons }));
   }
 
   render() {
@@ -34,7 +34,8 @@ class ItemList extends Component {
     }
     const {persons, loading, error} = this.state;
     const char = persons.map((item) => {
-      return  <li className="list-group-item" key={item.id} onClick={() => this.props.onSelectChar(item.id)}>{item.name}</li>
+      const label = this.props.renderItem(item);
+      return  <li className="list-group-item" key={item.id} onClick={() => this.props.onSelectChar(item.id)}>{label}</li>
     })
     return (
       <ul className="item__list list-group">

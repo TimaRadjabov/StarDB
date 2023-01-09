@@ -1,20 +1,22 @@
+import { Link } from "react-router-dom";
+
 import "./header.scss";
 
 const Header = () => {
   return (
     <div className="header d-flex justify-content-between">
       <h2>
-        <a href="#">Star DB</a>
+        <Link to="/">Star DB</Link>
       </h2>
       <ul className="d-flex header__list">
         <li>
-          <a href="#">People</a>
+          <Link to="/people">People</Link>
         </li>
         <li>
-          <a href="#">Planets</a>
+          <Link to="/planets">Planets</Link>
         </li>
         <li>
-          <a href="#">Starships</a>
+          <Link to="/starship">Starships</Link>
         </li>
       </ul>
     </div>
