@@ -41,6 +41,7 @@ class ItemDetails extends Component {
       return <div className="choose">Choose a character and you will see details</div>;
     }
     const itemImg = this.props.getItemImg;
+    console.log(itemImg);
     const spinner = loading ? (
      <div className="details__spinner">
        <ThreeCircles

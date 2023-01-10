@@ -7,8 +7,6 @@ import "./itemList.scss";
 class ItemList extends Component {
   state = {
     persons: null,
-    loading: false,
-    error: false,
   };
 
 
@@ -32,7 +30,7 @@ class ItemList extends Component {
       middleCircleColor=""
     />
     }
-    const {persons, loading, error} = this.state;
+    const {persons} = this.state;
     const char = persons.map((item) => {
       const label = this.props.renderItem(item);
       return  <li className="list-group-item" key={item.id} onClick={() => this.props.onSelectChar(item.id)}>{label}</li>

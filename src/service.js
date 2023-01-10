@@ -34,16 +34,15 @@ export default class StarApi {
     return this._transformPlanet(ship);
   };
   getImgPerson = (id) => {
-    return `${this._imageBase}/characters/${id}.jpg`
-  }
+    return `${this._imageBase}/characters/${id}.jpg`;
+  };
   getImgPlanet = (id) => {
-    return `${this._imageBase}/planets/${id}.jpg`
-  }
+    const img = `${this._imageBase}/planets/${Number(id) + 1}.jpg`;
+    return img;
+  };
   getImgStarship = (id) => {
-    return `${this._imageBase}/starships/${id}.jpg`
-  }
-
-
+    return `${this._imageBase}/starships/${Number(id) + 10}.jpg`;
+  };
 
   _extractId(item) {
     const idRegExp = /\/([0-9]*)\/$/;

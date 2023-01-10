@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import "./header.scss";
 
@@ -10,13 +10,13 @@ const Header = () => {
       </h2>
       <ul className="d-flex header__list">
         <li>
-          <Link to="/people">People</Link>
+          <NavLink to="/people" style={({isActive}) => ({color: isActive ? 'white' : '#00bc8c'})}>People</NavLink>
         </li>
         <li>
-          <Link to="/planets">Planets</Link>
+          <NavLink  to="/planets" style={({isActive}) => ({color: isActive ? 'white' : '#00bc8c'})}>Planets</NavLink>
         </li>
         <li>
-          <Link to="/starship">Starships</Link>
+          <NavLink to="/starship" style={({isActive}) => ({color: isActive ? 'white' : '#00bc8c'})}>Starships</NavLink>
         </li>
       </ul>
     </div>

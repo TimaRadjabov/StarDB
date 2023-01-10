@@ -16,9 +16,13 @@ class RandomPlanet extends Component {
   componentDidMount() {
     this.upDate();
     this.interval = setInterval(this.upDate, 5000);
+    if (this.state.error) {
+      this.interval = setInterval(this.upDate, 5000);
+    }
   }
-  componentWillUnmount(){
-    clearInterval(this.interval)
+ 
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   onPlanetLoaded = (planet) => {
@@ -34,11 +38,12 @@ class RandomPlanet extends Component {
       loading: false,
       error: true,
     });
+
   };
   upDate = () => {
     this.onPlanetLoading();
     const starAPI = new StarApi();
-    const id = Math.floor(Math.random() * 15 + 1);
+    const id = Math.floor(Math.random() * 10 + 1);
     starAPI.getPlanet(id).then(this.onPlanetLoaded).catch(this.onPlanetError);
   };
   render() {
